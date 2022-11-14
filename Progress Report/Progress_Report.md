@@ -1,6 +1,6 @@
-Progress Report
+## Progress Report
 
-November 14, 2022:
+### November 14, 2022:
 
 1. Which tasks have been completed?
 * 
