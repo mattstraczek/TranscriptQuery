@@ -15,4 +15,5 @@
 * Full user interface (frontend)
 
 3. Are you facing any challenges?
-* Selenium webscraping has some issues we need to fix to get to the next phase
+* We are facing some difficulties in building a web scraper and integrating it with Node.JS.
+* Python webscraper doesn't work properly and there are some issues in getting the data from the websites.
