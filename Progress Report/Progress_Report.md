@@ -16,4 +16,4 @@
 
 3. Are you facing any challenges?
 * We are facing some difficulties in building a web scraper and integrating it with Node.JS.
-* Python webscraper doesn't work properly and there are some issues in getting the data from the websites.
+* Python webscraper doesn't work properly and there are some issues in getting the data from the websites
