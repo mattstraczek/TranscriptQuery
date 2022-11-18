@@ -32,7 +32,7 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => {
     var dataToSend
     // spawn new child process to call the python script
-    const python_ = spawn('python3', ['web_scraper.py']);
+    const python_ = spawn('python', ['back-end/web_scraper.py']);
     // collect data from script
     // console.log('Before')
     python_.stdout.on('data', (data) => {
