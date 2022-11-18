@@ -24,3 +24,9 @@ SELECT * FROM Users;
 -- and Strings of the actual transcript.
 
 -- List of tuples (time stamp, phrase) (1:00, cs410 is cool)
+
+-- sqlite3 project.db
+-- sqlite> .header on
+-- sqlite> .mode column
+-- sqlite> .timer on
+-- sqlite> SELECT * FROM Users;

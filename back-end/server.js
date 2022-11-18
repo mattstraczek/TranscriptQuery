@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
     var dataToSend
-    
+
     const python_ = spawn('python', ['back-end/web_scraper.py']);
 
     python_.stdout.on('data', (data) => {

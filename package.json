@@ -6,6 +6,7 @@
     "first": "^0.0.3",
     "mongoose": "^6.7.2",
     "selenium": "^2.20.0",
+    "sqlite3": "^5.1.2",
     "webdriver": "^7.26.0"
   }
 }
