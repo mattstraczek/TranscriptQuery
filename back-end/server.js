@@ -37,6 +37,7 @@ function resolveAfter2Seconds() {
 }
 app.get('/', async (req, res) => {
     var dataToSend
+
     const python_ = spawn('python', ['back-end/web_scraper.py']);
 
     python_.stdout.on('data', async (data) => {
@@ -89,3 +90,4 @@ var scrapeLinks = async (data) => {
 // Start the server
 app.listen(port);
 console.log('Server running on port ' + port);
+
