@@ -5,6 +5,7 @@ var router = express.Router();
 const axios = require('axios')
 let cheerio = require('cheerio');
 let fs = require('fs');
+const { time } = require('console');
 
 var app = express();
 
@@ -27,14 +28,33 @@ app.use(bodyParser.json());
 // Use routes as a module (see index.js)
 // require('./routes')(app, router);
 
-app.get('/', (req, res) => {
+function resolveAfter2Seconds() {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve('resolved');
+        }, 5000);
+    })
+}
+app.get('/', async (req, res) => {
     var dataToSend
     const python_ = spawn('python', ['back-end/web_scraper.py']);
 
-    python_.stdout.on('data', (data) => {
-        console.log('Pipe data from python script ...' + data);
+    python_.stdout.on('data', async (data) => {
+        // console.log('Pipe data from python script ...');
         dataToSend = data.toString();
-        // console.log(dataToSend)
+        
+        let link_arr = await dataToSend.split('\'')
+        let i = 0
+
+        for (const d of link_arr) {
+            const result = await resolveAfter2Seconds()
+
+            if (d != '[' && d != ', ' && d != ']\r\n')  {
+                scrapeLinks(d)
+            }
+            i += 1
+        }
+        
     });
 
     python_.on('close', (code) => {
@@ -42,6 +62,29 @@ app.get('/', (req, res) => {
         res.send({ message: dataToSend} )
     });
 })
+
+var scrapeLinks = async (data) => {
+    const python_ = spawn('python', ['back-end/scraper.py', data]);
+    python_.stdout.on('data', (data) => {
+        // console.log('Pipe data from python script ...');
+        dataToSend = data.toString();
+        // scrapeLinks(data)
+        console.log(dataToSend)
+    });
+
+    python_.on('close', (code) => {
+        console.log(`scrape process close all stdio with code ${code}`);
+
+    });
+
+}
+
+// const asyncScrape = data =>
+//   new Promise(resolve =>
+//     setTimeout(
+//       () => resolve(scrapeLinks(data))
+//     )
+//   );
 
 // Start the server
 app.listen(port);

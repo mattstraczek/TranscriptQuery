@@ -5,59 +5,114 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-driver = webdriver.Chrome()
 from time import sleep
 
 # EXTRA OPTION FOR WEBDRIVER vvv
-# service=Service(ChromeDriverManager().install())
+driver_service=Service(ChromeDriverManager().install())
+
+# driver = webdriver.Chrome(service=driver_service)
+driver2 = webdriver.Chrome(service=driver_service)
 
 # HEADLESS NO BROWSER vvv
 # op = webdriver.ChromeOptions()
-# op.add_argument('headless')
-# driver = webdriver.Chrome(options=op)
+# # op.add_argument('headless')
+# op.headless = True
+# driver = webdriver.Chrome('./chromedriver.exe', options=op)
+# driver2 = webdriver.Chrome('./chromedriver.exe', options=op)
 
+def getTranscript(link):
+    # GET CHANNEL NAME
+    # driver.get("https://www.youtube.com/watch?v=Hb5ZXUeGPHc&ab_channel=SpaceX")
+    
+    driver.get(link)
+    driver.implicitly_wait(3)
 
+    # CLICK SETTINGS BUTTON
+    try:
+        element = driver.find_elements(By.XPATH, '//*[@id="button-shape"]/button')[0].click()
+        
+    except:
+        print("exception")
+        sleep(3)
+        print("exception1")
+        driver.refresh()
+
+    # FIND 'Show transcript' BUTTON, THEN CLICK
+    elements = driver.find_elements(By.TAG_NAME, 'ytd-menu-service-item-renderer')
+    transcript_btn_found = False
+    for element in elements:
+        # FOUND BUTTON
+        if element.find_element(By.TAG_NAME, 'yt-formatted-string').text == "Show transcript":
+            element.find_element(By.TAG_NAME, 'tp-yt-paper-item').click()
+            transcript_btn_found = True
+    if not transcript_btn_found:
+        print("No transcript for this video: " + link, flush=True)
+        # driver.quit()
+        return False
+
+    # GO THROUGH TRANSCRIPT
+    # elements = driver.find_elements(By.TAG_NAME, 'ytd-transcript-segment-renderer')
+    # idx = 1
+    # for element in elements:
+    #     # timestamp
+    #     ele = element.find_element(By.CSS_SELECTOR, '#segments-container > ytd-transcript-segment-renderer:nth-child(' + str(idx) + ') > div > div > div')
+    #     # print(ele.text, flush=True)
+    #     print(ele.text)
+    #     # transcript at the current timestamp
+    #     ele = element.find_element(By.CSS_SELECTOR, '#segments-container > ytd-transcript-segment-renderer:nth-child(' + str(idx) + ') > div > yt-formatted-string')
+    #     # print(ele.text, flush=True)
+    #     print(ele.text)
+    #     idx += 1
+    # driver.quit()
+    return True
+    
 
 # GET CHANNEL NAME
-driver.get("https://www.youtube.com/watch?v=Hb5ZXUeGPHc&ab_channel=SpaceX")
-driver.implicitly_wait(10)
+channel_url = "https://www.youtube.com/c/SpaceX/videos"
+driver2.get(channel_url)
+# driver.get("https://stackoverflow.com/questions/55400703/how-to-scroll-down-in-youtube-using-selenium")
+driver2.implicitly_wait(1)
 
-# CLICK SETTINGS BUTTON
+# GET VIDEOS
+
 try:
-    element = driver.find_elements(By.XPATH, '//*[@id="button-shape"]/button')[0].click()
-    
+    scroll_height = 10000
+    element = driver2.find_element(By.TAG_NAME, 'ytd-continuation-item-renderer')
+    while (element):
+        scroll_func = "window.scrollTo(0, " + str(scroll_height) + ");"
+        driver2.execute_script(scroll_func)
+        scroll_height *= 2
+        sleep(0.1)
+        # print(element)
+        element = driver2.find_element(By.TAG_NAME, 'ytd-continuation-item-renderer')
+    sleep(0.5)
 except:
-    print("exception")
-    sleep(3)
-    print("exception1")
-    driver.refresh()
+    print("All videos loaded", flush=True)
 
-# FIND 'Show transcript' BUTTON, THEN CLICK
-elements = driver.find_elements(By.TAG_NAME, 'ytd-menu-service-item-renderer')
-transcript_btn_found = False
+# for i in range(3):
+elements = driver2.find_elements(By.ID, 'thumbnail')
+num = 0
+transcript_links = []
 for element in elements:
-    # FOUND BUTTON
-    if element.find_element(By.TAG_NAME, 'yt-formatted-string').text == "Show transcript":
-        element.find_element(By.TAG_NAME, 'tp-yt-paper-item').click()
-        transcript_btn_found = True
-if not transcript_btn_found:
-    print("No transcript for this video")
-
-# GO THROUGH TRANSCRIPT
-elements = driver.find_elements(By.TAG_NAME, 'ytd-transcript-segment-renderer')
-idx = 1
-for element in elements:
-    # timestamp
-    ele = element.find_element(By.CSS_SELECTOR, '#segments-container > ytd-transcript-segment-renderer:nth-child(' + str(idx) + ') > div > div > div')
-    print(ele.text)
-    # transcript at the current timestamp
-    ele = element.find_element(By.CSS_SELECTOR, '#segments-container > ytd-transcript-segment-renderer:nth-child(' + str(idx) + ') > div > yt-formatted-string')
-    print(ele.text)
-    idx += 1
-
-driver.quit()
-
-
+    # print(element.get_attribute("href"))
+    link = element.get_attribute("href")
+    # driver.get(channel_url)
+    
+    if (link):
+        # Go to video, get transcript if one is available
+        # if num == 10:
+        #     driver2.quit()
+        #     break
+        # if getTranscript(link):
+        #     num += 1
+        #     transcript_links.append(link)
+        # print(num)
+        transcript_links.append(link)
+        # print(link, flush=True)
+        
+# print("Number of videos: " + str(len(elements) - 2), flush=True)
+print(transcript_links, flush=True)
+driver2.quit()
 
 
 
