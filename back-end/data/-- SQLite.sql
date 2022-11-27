@@ -6,7 +6,7 @@ CREATE TABLE Users(
                 ChannelName VARCHAR(255) NOT NULL,
                 DateRange VARCHAR(255) NOT NULL,
                 VideoName VARCHAR(255) NOT NULL,
-                Transcript TEXT(255) NOT NULL,
+                Transcript TEXT(1024) NOT NULL,
                 Timestamp TEXT(255) NOT NULL,
                 PRIMARY KEY(ChannelName, DateRange)
             );

@@ -17,8 +17,9 @@ function App() {
     console.log(StartDate);
     console.log(EndDate);
     console.log(SearchQuery);
-    Axios.post('http://localhost:3001/getQuery', {ChannelName: ChannelName, StartDate: StartDate, EndDate: EndDate}).then((response) => {
-    });
+    Axios.post('http://localhost:3002/query', {ChannelName: ChannelName, StartDate: StartDate, EndDate: EndDate, SearchQuery: SearchQuery}).then((response) => {
+    console.log(response).catch(err => console.log(err))  
+  });
   }
 
   const styles = StyleSheet.create(

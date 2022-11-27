@@ -64,6 +64,40 @@ app.get('/', async (req, res) => {
     });
 })
 
+app.post('/query', async (req, res) => {
+    const channelName = req.body.ChannelName
+    const startDate = req.body.StartDate
+    const endDate = req.body.endDate
+    const searchQuery = req.body.SearchQuery
+
+    var dataToSend
+    var link = "https://www.youtube.com/c/" + channelName + "/videos"
+    const python_ = spawn('python', ['back-end/web_scraper.py', link]);
+
+    python_.stdout.on('data', async (data) => {
+        // console.log('Pipe data from python script ...');
+        dataToSend = data.toString();
+        
+        let link_arr = await dataToSend.split('\'')
+        let i = 0
+
+        for (const d of link_arr) {
+            const result = await resolveAfter2Seconds()
+
+            if (d != '[' && d != ', ' && d != ']\r\n')  {
+                scrapeLinks(d)
+            }
+            i += 1
+        }
+        
+    });
+
+    python_.on('close', (code) => {
+        console.log(`child process close all stdio with code ${code}`);
+        res.send({ message: dataToSend} )
+    });
+})
+
 var scrapeLinks = async (data) => {
     const python_ = spawn('python', ['back-end/scraper.py', data]);
     python_.stdout.on('data', (data) => {

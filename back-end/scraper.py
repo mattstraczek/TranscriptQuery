@@ -1,11 +1,3 @@
-# import requests
-
-# url = "https://www.youtube.com/watch?v=D4xCGnwjMZQ&ab_channel=JohnWatsonRooney"
-# resp = requests.get(url)
-
-# print(resp.text)
-
-# r = requests.request("POST", url, )
 import sys
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -15,10 +7,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from time import sleep
+import sqlite3
 
 driver_service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=driver_service)
-link = str(sys.argv[1])
+
+
+# link = str(sys.argv[1])
+link = "https://www.youtube.com/watch?v=yKVcDu7vv4w&ab_channel=SpaceX"
 driver.get(link)
 driver.implicitly_wait(10)
 
@@ -32,43 +28,63 @@ except:
     sleep(3)
     print("exception1")
     driver.refresh()
-# print("After click settings")
-# FIND 'Show transcript' BUTTON, THEN CLICK
-# sleep(1)
+
+### CLICK TRANSCRIPT BUTTON
 sleep(0.5)
 elements = driver.find_elements(By.TAG_NAME, 'ytd-menu-service-item-renderer')
 transcript_btn_found = False
-# print("Hello")
+
 for element in elements:
-    # FOUND BUTTON
-    # print("Before")
     if element.find_element(By.TAG_NAME, 'yt-formatted-string').text == "Show transcript":
-        # print("found")
         element.find_element(By.TAG_NAME, 'tp-yt-paper-item').click()
-        # print("click")
-        # sleep(3)
         transcript_btn_found = True
+
+transcript = []
+
+### IF TRANSCRIPT BUTTON FOUND, CYCLE THROUGH TRANSCRIPT
 if not transcript_btn_found:
     print("No transcript for this video: ", flush=True)
-    # driver.quit()
-    # return False
 else:
     elements = driver.find_elements(By.TAG_NAME, 'ytd-transcript-segment-renderer')
     idx = 1
     for element in elements:
-        # timestamp
-        ele = element.find_element(By.CSS_SELECTOR, '#segments-container > ytd-transcript-segment-renderer:nth-child(' + str(idx) + ') > div > div > div')
-        # print(ele.text, flush=True)
-        print(ele.text)
-        # transcript at the current timestamp
-        ele = element.find_element(By.CSS_SELECTOR, '#segments-container > ytd-transcript-segment-renderer:nth-child(' + str(idx) + ') > div > yt-formatted-string')
-        # print(ele.text, flush=True)
-        print(ele.text)
-        idx += 1
-    # print("Hello " + str(sys.argv[1]), flush=True)
+        # TIMESTAMP
+        time = element.find_element(By.CSS_SELECTOR, '#segments-container > ytd-transcript-segment-renderer:nth-child(' + str(idx) + ') > div > div > div')
+        # print(time.text)
 
-#OPTIONAL
+        # TRANSCRIPT AT CURRENT TIMESTAMP
+        curr_text = element.find_element(By.CSS_SELECTOR, '#segments-container > ytd-transcript-segment-renderer:nth-child(' + str(idx) + ') > div > yt-formatted-string')
+        # print(curr_text.text)
+        transcript.append((time.text, curr_text.text))
+        idx += 1
+
+# UPLOAD TRANSCRIPT TO DATABASE
+con = sqlite3.connect("project.db")
+c = con.cursor()
+
+# Ex: '[(0:06, Hello), (0:10, world), ...]'
+transcript_val = "["
+for i in range(len(transcript)):
+    transcript_val += "(" + str(transcript[i][0]) + ", " + str(transcript[i][1]) + ")"
+    if i != len(transcript) - 1:
+        transcript_val += ", "
+    else:
+        transcript_val += "]"
+print(transcript_val)
+
+query = "INSERT INTO Users (ChannelName,DateRange,VideoName, Transcript, Timestamp) VALUES('HelloTesting', '01/01/2022 - 01/01/2023', 'Video Title', '" + transcript_val + "', CURRENT_TIMESTAMP)"
+
+# "INSERT INTO Users (ChannelName,DateRange,VideoName, Transcript, Timestamp) 
+# VALUES('HelloTesting', '01/01/2022 - 01/01/2023', 'Video Title', 'Transcript', 
+# CURRENT_TIMESTAMP)"
+
+c.execute(query)
+con.commit()
+# # c.execute("SELECT * FROM Users")
+# # con.commit()
+con.close()
+
+#OPTIONAL?
 sleep(3)
 
 driver.quit()
-
