@@ -3,13 +3,12 @@
 DROP TABLE IF EXISTS Users;
 
 CREATE TABLE Users(
+                Id INTEGER PRIMARY KEY AUTOINCREMENT,
                 ChannelName VARCHAR(255) NOT NULL,
                 DateRange VARCHAR(255) NOT NULL,
                 VideoName VARCHAR(255) NOT NULL,
-                Transcript TEXT(1024) NOT NULL,
-                Timestamp TEXT(255) NOT NULL,
-                PRIMARY KEY(ChannelName, DateRange)
-            );
+                Transcript TEXT(64000) NOT NULL
+                );
 
 
 INSERT INTO Users (ChannelName,DateRange,VideoName, Transcript, Timestamp) 
@@ -30,3 +29,12 @@ SELECT * FROM Users;
 -- sqlite> .mode column
 -- sqlite> .timer on
 -- sqlite> SELECT * FROM Users;
+
+-- CREATE TABLE Users(
+--                 ChannelName VARCHAR(255) NOT NULL,
+--                 DateRange VARCHAR(255) NOT NULL,
+--                 VideoName VARCHAR(255) NOT NULL,
+--                 Transcript TEXT(1024) NOT NULL,
+--                 Timestamp TEXT(255) NOT NULL,
+--                 PRIMARY KEY(ChannelName, DateRange)
+--             );

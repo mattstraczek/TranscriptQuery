@@ -15,6 +15,7 @@ driver = webdriver.Chrome(service=driver_service)
 
 # link = str(sys.argv[1])
 link = "https://www.youtube.com/watch?v=yKVcDu7vv4w&ab_channel=SpaceX"
+# link = "https://www.youtube.com/watch?v=vcsSc2iksC0"
 driver.get(link)
 driver.implicitly_wait(10)
 
@@ -59,7 +60,7 @@ else:
         idx += 1
 
 # UPLOAD TRANSCRIPT TO DATABASE
-con = sqlite3.connect("project.db")
+con = sqlite3.connect("data/project.db") 
 c = con.cursor()
 
 # Ex: '[(0:06, Hello), (0:10, world), ...]'
@@ -72,16 +73,16 @@ for i in range(len(transcript)):
         transcript_val += "]"
 print(transcript_val)
 
-query = "INSERT INTO Users (ChannelName,DateRange,VideoName, Transcript, Timestamp) VALUES('HelloTesting', '01/01/2022 - 01/01/2023', 'Video Title', '" + transcript_val + "', CURRENT_TIMESTAMP)"
 
-# "INSERT INTO Users (ChannelName,DateRange,VideoName, Transcript, Timestamp) 
-# VALUES('HelloTesting', '01/01/2022 - 01/01/2023', 'Video Title', 'Transcript', 
-# CURRENT_TIMESTAMP)"
+name = "test_name"
+date_range = "test_date_range"
+video_name = "test_Video_name"
 
-c.execute(query)
+c.execute('''INSERT INTO Users(ChannelName, DateRange, VideoName, Transcript) VALUES(?,?,?,?)''',(name, date_range, video_name, transcript_val))
+
 con.commit()
-# # c.execute("SELECT * FROM Users")
-# # con.commit()
+c.execute("SELECT * FROM Users")
+con.commit()
 con.close()
 
 #OPTIONAL?
