@@ -26,9 +26,13 @@ curr_year = date.today().year #2022
 # start = curr_year - 2022
 # end = curr_year - 2021
 link = str(sys.argv[1])
-start = curr_year - sys.argv[2]
-end = curr_year - sys.argv[3]
+# print(sys.argv[2])
+start = curr_year - int(sys.argv[2])
+end = curr_year - int(sys.argv[3])
 channel_url = link
+# print(start)
+# print(end)
+# print(channel_url)
 # channel_url = "https://www.youtube.com/c/SpaceX/videos"
 driver.get(channel_url)
 driver.implicitly_wait(1)

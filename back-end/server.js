@@ -64,10 +64,10 @@ app.get('/', async (req, res) => {
     });
 })
 
-app.get('/query', async (req, res) => {
+app.post('/query', async (req, res) => {
     const channelName = req.body.ChannelName
     const startDate = req.body.StartDate
-    const endDate = req.body.endDate
+    const endDate = req.body.EndDate
     const searchQuery = req.body.SearchQuery
 
     var dataToSend
