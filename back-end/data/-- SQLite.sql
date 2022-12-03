@@ -11,11 +11,13 @@ CREATE TABLE Users(
                 );
 
 
-INSERT INTO Users (ChannelName,DateRange,VideoName, Transcript, Timestamp) 
-VALUES('YouTube Channel', '01/01/2022 - 01/01/2023', 'Video Title', 
-'Transcript', CURRENT_TIMESTAMP);
-
 SELECT * FROM Users;
+
+
+-- INSERT INTO Users (ChannelName,DateRange,VideoName, Transcript, Timestamp) 
+-- VALUES('YouTube Channel', '01/01/2022 - 01/01/2023', 'Video Title', 
+-- 'Transcript', CURRENT_TIMESTAMP);
+
 
 -- Storing Data
 
