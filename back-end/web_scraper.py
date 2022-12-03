@@ -23,13 +23,13 @@ driver = webdriver.Chrome(service=driver_service)
 
 # GET CHANNEL NAME
 curr_year = date.today().year #2022
-start = curr_year - 2022
-end = curr_year - 2021
-# link = str(sys.argv[1])
-# start = curr_year - str(sys.argv[2])
-# end = curr_year - str(sys.argv[3])
-# channel_url = link
-channel_url = "https://www.youtube.com/c/SpaceX/videos"
+# start = curr_year - 2022
+# end = curr_year - 2021
+link = str(sys.argv[1])
+start = curr_year - sys.argv[2]
+end = curr_year - sys.argv[3]
+channel_url = link
+# channel_url = "https://www.youtube.com/c/SpaceX/videos"
 driver.get(channel_url)
 driver.implicitly_wait(1)
 

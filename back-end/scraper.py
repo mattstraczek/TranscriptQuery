@@ -13,8 +13,8 @@ driver_service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=driver_service)
 
 # ARGUMENTS
-# link = str(sys.argv[1])
-link = "https://www.youtube.com/watch?v=yKVcDu7vv4w&ab_channel=SpaceX"
+link = str(sys.argv[1])
+# link = "https://www.youtube.com/watch?v=yKVcDu7vv4w&ab_channel=SpaceX"
 # link = "https://www.youtube.com/watch?v=vcsSc2iksC0"
 # DateRange = str(sys.argv[2])
 driver.get(link)
@@ -62,11 +62,9 @@ else:
 
 ### GETTING VIDEO NAME
 
-# VideoName = driver.find_elements(By.TAG_NAME, 'h1')
 VideoName = driver.find_element(By.XPATH, '//*[@id="title"]/h1/yt-formatted-string')
-# VideoName =
 VideoName = VideoName.text
-print(VideoName)
+# print(VideoName)
 
 # UPLOAD TRANSCRIPT TO DATABASE
 # con = sqlite3.connect("data/project.db") 

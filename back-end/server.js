@@ -72,7 +72,7 @@ app.get('/query', async (req, res) => {
 
     var dataToSend
     var link = "https://www.youtube.com/c/" + channelName + "/videos"
-    const python_ = spawn('python', ['back-end/web_scraper.py', link]);
+    const python_ = spawn('python', ['back-end/web_scraper.py', link, startDate, endDate]);
 
     python_.stdout.on('data', async (data) => {
         // console.log('Pipe data from python script ...');
