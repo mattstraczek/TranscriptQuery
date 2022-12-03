@@ -64,7 +64,7 @@ app.get('/', async (req, res) => {
     });
 })
 
-app.post('/query', async (req, res) => {
+app.get('/query', async (req, res) => {
     const channelName = req.body.ChannelName
     const startDate = req.body.StartDate
     const endDate = req.body.endDate

@@ -12,10 +12,11 @@ import sqlite3
 driver_service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=driver_service)
 
-
+# ARGUMENTS
 # link = str(sys.argv[1])
 link = "https://www.youtube.com/watch?v=yKVcDu7vv4w&ab_channel=SpaceX"
 # link = "https://www.youtube.com/watch?v=vcsSc2iksC0"
+# DateRange = str(sys.argv[2])
 driver.get(link)
 driver.implicitly_wait(10)
 
@@ -59,31 +60,39 @@ else:
         transcript.append((time.text, curr_text.text))
         idx += 1
 
+### GETTING VIDEO NAME
+
+# VideoName = driver.find_elements(By.TAG_NAME, 'h1')
+VideoName = driver.find_element(By.XPATH, '//*[@id="title"]/h1/yt-formatted-string')
+# VideoName =
+VideoName = VideoName.text
+print(VideoName)
+
 # UPLOAD TRANSCRIPT TO DATABASE
-con = sqlite3.connect("data/project.db") 
-c = con.cursor()
+# con = sqlite3.connect("data/project.db") 
+# c = con.cursor()
 
-# Ex: '[(0:06, Hello), (0:10, world), ...]'
-transcript_val = "["
-for i in range(len(transcript)):
-    transcript_val += "(" + str(transcript[i][0]) + ", " + str(transcript[i][1]) + ")"
-    if i != len(transcript) - 1:
-        transcript_val += ", "
-    else:
-        transcript_val += "]"
-print(transcript_val)
+# # Ex: '[(0:06, Hello), (0:10, world), ...]'
+# transcript_val = "["
+# for i in range(len(transcript)):
+#     transcript_val += "(" + str(transcript[i][0]) + ", " + str(transcript[i][1]) + ")"
+#     if i != len(transcript) - 1:
+#         transcript_val += ", "
+#     else:
+#         transcript_val += "]"
+# print(transcript_val)
 
 
-name = "test_name"
-date_range = "test_date_range"
-video_name = "test_Video_name"
+# name = "test_name"
+# date_range = "test_date_range"
+# video_name = "test_Video_name"
 
-c.execute('''INSERT INTO Users(ChannelName, DateRange, VideoName, Transcript) VALUES(?,?,?,?)''',(name, date_range, video_name, transcript_val))
+# c.execute('''INSERT INTO Users(ChannelName, DateRange, VideoName, Transcript) VALUES(?,?,?,?)''',(name, date_range, video_name, transcript_val))
 
-con.commit()
-c.execute("SELECT * FROM Users")
-con.commit()
-con.close()
+# con.commit()
+# c.execute("SELECT * FROM Users")
+# con.commit()
+# con.close()
 
 #OPTIONAL?
 sleep(3)

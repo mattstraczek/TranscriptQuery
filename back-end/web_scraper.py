@@ -69,12 +69,12 @@ for detail in details:
     years_ago = parseDate(video_date[1].text)
     
     if (years_ago >= start and years_ago <= end):
-        video_name = detail.find_element(By.TAG_NAME, 'h3')
-        video_name = video_name.find_element(By.TAG_NAME, 'a')
-        print(video_name.get_attribute("title"))
+        # video_name = detail.find_element(By.TAG_NAME, 'h3')
+        # video_name = video_name.find_element(By.TAG_NAME, 'a')
+        # print(video_name.get_attribute("title"))
 
         idxs_in_range.append(i)
-        print(video_date[1].text)
+        # print(video_date[1].text)
         
     i += 1
 
