@@ -13,6 +13,8 @@ CREATE TABLE Users(
 
 SELECT * FROM Users;
 
+-- DElETE FROM Users WHERE Id = 2;
+
 
 -- INSERT INTO Users (ChannelName,DateRange,VideoName, Transcript, Timestamp) 
 -- VALUES('YouTube Channel', '01/01/2022 - 01/01/2023', 'Video Title', 

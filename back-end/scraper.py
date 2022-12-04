@@ -82,8 +82,8 @@ for i in range(len(transcript)):
 # print(transcript_val)
 
 
-channel_name = "test_name"
-date_range = "test_date_range"
+channel_name = sys.argv[2]
+date_range = sys.argv[3] + " to " + sys.argv[4]
 # video_name = "test_Video_name"
 
 c.execute('''INSERT INTO Users(ChannelName, DateRange, VideoName, Transcript) VALUES(?,?,?,?)''',(channel_name, date_range, VideoName, transcript_val))
