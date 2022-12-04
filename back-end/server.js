@@ -32,7 +32,7 @@ function resolveAfter2Seconds() {
     return new Promise(resolve => {
         setTimeout(() => {
             resolve('resolved');
-        }, 5000);
+        }, 15000);
     })
 }
 app.get('/', async (req, res) => {
@@ -89,7 +89,7 @@ app.post('/query', async (req, res) => {
             const result = await resolveAfter2Seconds()
 
             if (d != '[' && d != ', ' && d != ']\r\n')  {
-                scrapeLinks(d)
+                scrapeLinks(d, channelName, startDate, endDate)
             }
             if (d != ']\r\n') {
                 //Call searcheng.py by spawning
@@ -107,8 +107,8 @@ app.post('/query', async (req, res) => {
     });
 })
 
-var scrapeLinks = async (data) => {
-    const python_ = spawn('python', ['back-end/scraper.py', data]);
+var scrapeLinks = async (data, channelName, startDate, endDate) => {
+    const python_ = spawn('python', ['back-end/scraper.py', data, channelName, startDate, endDate]);
     python_.stdout.on('data', (data) => {
         // console.log('Pipe data from python script ...');
         dataToSend = data.toString();
