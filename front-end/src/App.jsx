@@ -1,10 +1,9 @@
-import logo from './logo.svg';
 import './App.css';
 import Data from "./MOCK_DATA.json";
 import React, { useState } from "react";
 import { Platform, StyleSheet, View, Text } from "react-native";
 import Axios from 'axios';
-
+import { Link } from 'react-router-dom';
 
 function App() {
   const [ChannelName, setChannelName] = useState('');
@@ -18,7 +17,8 @@ function App() {
     console.log(EndDate);
     console.log(SearchQuery);
     Axios.post('http://localhost:3002/query', {ChannelName: ChannelName, StartDate: StartDate, EndDate: EndDate, SearchQuery: SearchQuery}).then((response) => {
-    console.log(response).catch(err => console.log(err))  
+    console.log(response).catch(err => console.log(err));
+    <Link to='/SearchEngine'> </Link>  
   });
   }
 
@@ -52,6 +52,10 @@ function App() {
       },
     }
   );
+  
+  // const handleClick = () => {
+  //   <Link to='/SearchEngine'> </Link>
+  // }
 
   return (
     // <div className="App">
@@ -71,6 +75,7 @@ function App() {
     //     </div>
     //   ))}
     // </div>
+
 
     <form>   
     <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
