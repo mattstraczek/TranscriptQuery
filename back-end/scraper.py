@@ -86,7 +86,7 @@ channel_name = sys.argv[2]
 date_range = sys.argv[3] + " to " + sys.argv[4]
 # video_name = "test_Video_name"
 
-c.execute('''INSERT INTO Users(ChannelName, DateRange, VideoName, Transcript) VALUES(?,?,?,?)''',(channel_name, date_range, VideoName, transcript_val))
+c.execute('''INSERT INTO Users(ChannelName, DateRange, Link, VideoName, Transcript) VALUES(?,?,?,?,?)''',(channel_name, date_range, link, VideoName, transcript_val))
 
 con.commit()
 c.execute("SELECT * FROM Users")

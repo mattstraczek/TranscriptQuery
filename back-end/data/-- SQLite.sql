@@ -6,6 +6,7 @@ CREATE TABLE Users(
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
                 ChannelName VARCHAR(255) NOT NULL,
                 DateRange VARCHAR(255) NOT NULL,
+                Link VARCHAR(255) NOT NULL,
                 VideoName VARCHAR(255) NOT NULL,
                 Transcript TEXT(64000) NOT NULL
                 );
