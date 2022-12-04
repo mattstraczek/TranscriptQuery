@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import { Platform, StyleSheet, View, Text } from "react-native";
 import Axios from 'axios';
 import { Link } from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import Header from './shared/Header';
+import SearchEngine from './SearchEngine';
 
 function App() {
   const [ChannelName, setChannelName] = useState('');
@@ -16,9 +19,9 @@ function App() {
     console.log(StartDate);
     console.log(EndDate);
     console.log(SearchQuery);
+    <Link to='./search'></Link>
     Axios.post('http://localhost:3002/query', {ChannelName: ChannelName, StartDate: StartDate, EndDate: EndDate, SearchQuery: SearchQuery}).then((response) => {
     console.log(response).catch(err => console.log(err));
-    <Link to='/SearchEngine'> </Link>  
   });
   }
 
@@ -76,7 +79,6 @@ function App() {
     //   ))}
     // </div>
 
-
     <form>   
     <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
     <View syle={styles.container}><Text style={styles.setFontSize}>YouTube Transcript Search</Text></View>
@@ -94,6 +96,17 @@ function App() {
         <input value = {SearchQuery} onChange={(event) => {setSearchQuery(event.target.value);}} type="search" id="default-search" class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Query (ENTER PHRASE)" required />
 
         <button onClick={sendInfo} class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+    </div>
+    <div>
+        <Router>
+          <div class="flex flex-col h-screen justify-between">
+            <Header />
+            <Routes>
+                <Route exact path = '/' element = {<App />} />
+                <Route exact path = '/search' element = {<SearchEngine />} />
+            </Routes>
+          </div>
+        </Router>
     </div>
 </form>
 
