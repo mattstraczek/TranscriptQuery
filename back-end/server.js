@@ -53,8 +53,12 @@ app.get('/', async (req, res) => {
             if (d != '[' && d != ', ' && d != ']\r\n')  {
                 scrapeLinks(d)
             }
+            
             i += 1
         }
+        
+        
+
         
     });
 
@@ -87,9 +91,14 @@ app.post('/query', async (req, res) => {
             if (d != '[' && d != ', ' && d != ']\r\n')  {
                 scrapeLinks(d)
             }
+            if (d != ']\r\n') {
+                //Call searcheng.py by spawning
+                //axios post
+            }
             i += 1
         }
         
+        // console.log("hi")
     });
 
     python_.on('close', (code) => {
