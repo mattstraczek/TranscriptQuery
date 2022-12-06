@@ -7,7 +7,6 @@ function Header({ title }) {
         <div className="container mx-auto">
           <div className="flex-none px-8 mx-8"></div>
           <h2 className="text-2xl m-2">
-            |{" "}
             <Link to="/" className="font-thin">
               {title}
             </Link>
