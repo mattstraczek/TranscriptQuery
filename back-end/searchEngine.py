@@ -35,6 +35,6 @@ rows = c.fetchall()
 for row in rows:
     actualData = row[2]
     splitData = actualData.split(",")
-    print(len(splitData))
+    print(len(splitData), flush=True)
 
 con.close()

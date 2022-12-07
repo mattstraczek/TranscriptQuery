@@ -129,7 +129,7 @@ var scrapeLinks = async (data, channelName, startDate, endDate) => {
 var searchTranscripts = async (searchQuery, channelName, startDate, endDate) => {
     const python_ = spawn('python', ['back-end/searchEngine.py', searchQuery, channelName, startDate, endDate]);
     python_.stdout.on('data', (data) => {
-        // console.log('Pipe data from python script ...');
+        console.log('Pipe data from search script ...');
         dataToSend = data.toString();
         // scrapeLinks(data)
         console.log(dataToSend)
