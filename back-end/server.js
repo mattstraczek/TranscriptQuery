@@ -57,10 +57,6 @@ app.get('/', async (req, res) => {
             
             i += 1
         }
-        
-        
-
-        
     });
 
     python_.on('close', (code) => {

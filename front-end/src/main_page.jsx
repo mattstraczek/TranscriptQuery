@@ -14,13 +14,10 @@ function Main_Page() {
   const [SearchQuery, setSearchQuery] = useState('');
 
   const sendInfo = () => {
-    // <Link> './SearchEngine' </Link>
-
     console.log(ChannelName);
     console.log(StartDate);
     console.log(EndDate);
     console.log(SearchQuery);
-    // <Link to='./SearchEngine'></Link>
     Axios.post('http://localhost:3002/query', {ChannelName: ChannelName, StartDate: StartDate, EndDate: EndDate, SearchQuery: SearchQuery}).then((response) => {
     console.log(response).catch(err => console.log(err));
   });
@@ -40,7 +37,7 @@ function Main_Page() {
       setFontSize: {
         fontWeight: 'bold',
         fontSize: 60,
-        color: 'white',
+        color: 'black',
         textAlign: 'center',
       },
     }
@@ -55,7 +52,7 @@ function Main_Page() {
       },
       setFontSize: {
         fontSize: 15,
-        color: 'white',
+        color: 'black',
         textAlign: 'center',
       },
     }
