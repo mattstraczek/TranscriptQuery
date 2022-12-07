@@ -72,13 +72,14 @@ con = sqlite3.connect("back-end/data/project.db")
 c = con.cursor()
 
 # # Ex: '[(0:06, Hello), (0:10, world), ...]'
-transcript_val = "["
+# transcript_val = "["
+transcript_val = ""
 for i in range(len(transcript)):
     transcript_val += "(" + str(transcript[i][0]) + ", " + str(transcript[i][1]) + ")"
     if i != len(transcript) - 1:
-        transcript_val += ", "
-    else:
-        transcript_val += "]"
+        transcript_val += "; "
+    # else:
+    #     transcript_val += "]"
 # print(transcript_val)
 
 
