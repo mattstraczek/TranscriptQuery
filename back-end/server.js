@@ -6,6 +6,7 @@ const axios = require('axios')
 let cheerio = require('cheerio');
 let fs = require('fs');
 const { time } = require('console');
+const { start } = require('repl');
 
 var app = express();
 
@@ -91,9 +92,11 @@ app.post('/query', async (req, res) => {
             if (d != '[' && d != ', ' && d != ']\r\n')  {
                 scrapeLinks(d, channelName, startDate, endDate)
             }
-            if (d != ']\r\n') {
+            if (d == ']\r\n') {
                 //Call searcheng.py by spawning
                 //axios post
+                searchTranscripts(searchQuery, channelName, startDate, endDate)
+                
             }
             i += 1
         }
@@ -119,6 +122,21 @@ var scrapeLinks = async (data, channelName, startDate, endDate) => {
     python_.on('close', (code) => {
         console.log(`scrape process close all stdio with code ${code}`);
 
+    });
+
+}
+
+var searchTranscripts = async (searchQuery, channelName, startDate, endDate) => {
+    const python_ = spawn('python', ['back-end/searchEngine.py', searchQuery, channelName, startDate, endDate]);
+    python_.stdout.on('data', (data) => {
+        // console.log('Pipe data from python script ...');
+        dataToSend = data.toString();
+        // scrapeLinks(data)
+        console.log(dataToSend)
+    });
+
+    python_.on('close', (code) => {
+        console.log(`search process close all stdio with code ${code}`);
     });
 
 }

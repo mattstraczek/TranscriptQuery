@@ -4,8 +4,10 @@
 
 import sqlite3
 from dataFormatter import *
+import sys
 
-con = sqlite3.connect("/Users/heetparikh/Desktop/TranscriptQuery/back-end/data/project.db") 
+# /Users/heetparikh/Desktop/TranscriptQuery/
+con = sqlite3.connect("back-end/data/project.db") 
 c = con.cursor()
 
 #ChannelName
@@ -15,6 +17,11 @@ ChannelName = "SpaceX"
 DataRangeStart = "2022"
 DateRangeEnd = "2016"
 query = "Music"
+
+query = sys.argv[1]
+ChannelName = sys.argv[2]
+DataRangeStart = sys.argv[3]
+DateRangeEnd = sys.argv[4]
 
 sqlQuery = "SELECT Link, VideoName, Transcript FROM Users WHERE ChannelName =" + "'" + ChannelName + "'" + " AND " + "Transcript like"+ "'" + "%" + query + "%' LIMIT 1"
 # print(sqlQuery)
@@ -29,3 +36,5 @@ for row in rows:
     actualData = row[2]
     splitData = actualData.split(",")
     print(len(splitData))
+
+con.close()

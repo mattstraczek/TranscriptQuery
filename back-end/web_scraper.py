@@ -50,7 +50,8 @@ try:
         element = driver.find_element(By.TAG_NAME, 'ytd-continuation-item-renderer')
     sleep(0.5)
 except:
-    print("All videos loaded", flush=True)
+    # print("All videos loaded", flush=True)
+    pass
 
 ### GET VIDEO NAME AND DATE
 
