@@ -97,3 +97,7 @@ con.close()
 sleep(3)
 
 driver.quit()
+
+#Spacex , Daterange, Query: "Hello"
+#Transcript -> [(timestamp1, transcript1); (timestamp2, transcript2); (timestamp3, transcript3) ]
+#[(VideoName1, [Timestamp1,Timestamp2]),(VideoName2, [Timestamp1,Timestamp2])]
