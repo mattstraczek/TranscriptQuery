@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import axios from 'axios';
 
-function SearchEngine() {
+function SearchEngine(channelName, query, etx) {
     // const printData = () => {
-    //     Axios.post('http://localhost:3002/query').then((response) => {
+    //     Axios.get('http://localhost:3002/query').then((response) => {
     //     console.log(response).catch(err => console.log(err));
     //   });
     //   }
