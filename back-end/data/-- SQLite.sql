@@ -21,6 +21,8 @@ CREATE TABLE Results(
                 );
 
 SELECT * FROM Users;
+SELECT * FROM Results;
+
 
 -- DElETE FROM Users WHERE Id = 2;
 
