@@ -82,9 +82,9 @@ app.post('/query', async (req, res) => {
         
         let link_arr = await dataToSend.split('\'')
         let i = 0
-
+        const result = await resolveAfter2Seconds()
         for (const d of link_arr) {
-            const result = await resolveAfter2Seconds()
+            // const result = await resolveAfter2Seconds()
 
             if (d != '[' && d != ', ' && d != ']\r\n')  {
                 scrapeLinks(d, channelName, startDate, endDate)
@@ -92,7 +92,7 @@ app.post('/query', async (req, res) => {
             if (d == ']\r\n') {
                 //Call searcheng.py by spawning
                 //axios post
-                const result = await resolveAfter2Seconds()
+                // const result = await resolveAfter2Seconds()
                 searchTranscripts(searchQuery, channelName, startDate, endDate)
                 
             }
@@ -109,18 +109,18 @@ app.post('/query', async (req, res) => {
 })
 
 var scrapeLinks = async (data, channelName, startDate, endDate) => {
-    const python_ = spawn('python', ['back-end/scraper.py', data, channelName, startDate, endDate]);
-    python_.stdout.on('data', (data) => {
-        // console.log('Pipe data from python script ...');
-        dataToSend = data.toString();
-        // scrapeLinks(data)
-        console.log(dataToSend)
-    });
+    const python_ = spawnSync('python', ['back-end/scraper.py', data, channelName, startDate, endDate]);
+    // python_.stdout.on('data', (data) => {
+    //     // console.log('Pipe data from python script ...');
+    //     dataToSend = data.toString();
+    //     // scrapeLinks(data)
+    //     console.log(dataToSend)
+    // });
 
-    python_.on('close', (code) => {
-        console.log(`scrape process close all stdio with code ${code}`);
+    // python_.on('close', (code) => {
+    //     console.log(`scrape process close all stdio with code ${code}`);
 
-    });
+    // });
 
 }
 
