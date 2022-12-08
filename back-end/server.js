@@ -7,6 +7,7 @@ let cheerio = require('cheerio');
 let fs = require('fs');
 const { time } = require('console');
 const { start } = require('repl');
+const {spawnSync} = require('child_process')
 
 var app = express();
 
@@ -91,6 +92,7 @@ app.post('/query', async (req, res) => {
             if (d == ']\r\n') {
                 //Call searcheng.py by spawning
                 //axios post
+                const result = await resolveAfter2Seconds()
                 searchTranscripts(searchQuery, channelName, startDate, endDate)
                 
             }
@@ -123,19 +125,34 @@ var scrapeLinks = async (data, channelName, startDate, endDate) => {
 }
 
 var searchTranscripts = async (searchQuery, channelName, startDate, endDate) => {
-    const python_ = spawn('python', ['back-end/searchEngine.py', searchQuery, channelName, startDate, endDate]);
-    python_.stdout.on('data', (data) => {
-        console.log('Pipe data from search script ...');
-        dataToSend = data.toString();
-        // scrapeLinks(data)
-        console.log(dataToSend)
-    });
+    const python_ = spawnSync('python', ['back-end/searchEngine.py', searchQuery, channelName, startDate, endDate]);
+    // python_.stdout.on('data', (data) => {
+    //     console.log('Pipe data from search script ...');
+    //     dataToSend = data.toString();
+    //     // scrapeLinks(data)
+    //     console.log(dataToSend)
+    // });
 
-    python_.on('close', (code) => {
-        console.log(`search process close all stdio with code ${code}`);
-    });
-
+    // python_.on('close', (code) => {
+    //     console.log(`search process close all stdio with code ${code}`);
+    // });
+    console.log(python_.output.toString('utf8'))
 }
+
+// var searchTranscripts = async (searchQuery, channelName, startDate, endDate) => {
+//     const python_ = spawnSync('python', ['back-end/searchEngine.py', searchQuery, channelName, startDate, endDate]);
+//     python_.stdout.on('data', (data) => {
+//         console.log('Pipe data from search script ...');
+//         dataToSend = data.toString();
+//         // scrapeLinks(data)
+//         console.log(dataToSend)
+//     });
+
+//     python_.on('close', (code) => {
+//         console.log(`search process close all stdio with code ${code}`);
+//     });
+
+// }
 
 // const asyncScrape = data =>
 //   new Promise(resolve =>
