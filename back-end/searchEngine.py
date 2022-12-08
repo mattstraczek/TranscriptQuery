@@ -18,7 +18,7 @@ c = con.cursor()
 # ChannelName = "SpaceX"
 # DataRangeStart = "2022"
 # DateRangeEnd = "2020"
-# query = "great to be"
+# query = "is"
 
 query = sys.argv[1]
 ChannelName = sys.argv[2]

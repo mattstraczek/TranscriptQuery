@@ -11,6 +11,10 @@ const {spawnSync} = require('child_process')
 
 var app = express();
 
+
+  
+
+
 var port = process.env.PORT || 3002
 
 // Allow CORS so that backend and frontend could be put on different servers
@@ -138,6 +142,27 @@ var searchTranscripts = async (searchQuery, channelName, startDate, endDate) => 
     // });
     console.log(python_.output.toString('utf8'))
 }
+
+
+const sqlite3 = require('sqlite3').verbose();
+let db = new sqlite3.Database('back-end/data/project.db', (err) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    console.log('Connected to the in-memory SQlite database.');
+  });
+
+
+app.post('/results/display', (req, res) => {
+    db.all("SELECT * FROM Results", (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Read statement was successful")
+            res.send(result);
+        }
+    });
+});
 
 // var searchTranscripts = async (searchQuery, channelName, startDate, endDate) => {
 //     const python_ = spawnSync('python', ['back-end/searchEngine.py', searchQuery, channelName, startDate, endDate]);
