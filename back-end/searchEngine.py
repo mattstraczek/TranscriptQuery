@@ -51,3 +51,9 @@ for row in rows:
     myDict[row[0]] = timestampsList
     print(myDict, flush=True)
 con.close()
+
+
+
+# #ChannelName
+#DateRange
+#Query = results

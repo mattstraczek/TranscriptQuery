@@ -11,6 +11,14 @@ CREATE TABLE Users(
                 Transcript TEXT(64000) NOT NULL
                 );
 
+DROP TABLE IF EXISTS Results;
+
+CREATE TABLE Results(
+                ChannelName VARCHAR(255) NOT NULL,
+                DateRange VARCHAR(255) NOT NULL,
+                Query VARCHAR(255) NOT NULL,
+                Results TEXT(64000) NOT NULL
+                );
 
 SELECT * FROM Users;
 
