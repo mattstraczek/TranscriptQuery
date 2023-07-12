@@ -30,16 +30,16 @@ a. Selenium (python) for web scraping
 b. React for interface, node.js (python) for backend logic, such as web scraping and
 the search engine (MetaPY)
 4. Main tasks:
-1. Interface for web scraping (channel details, date range for videos, and
+a. Interface for web scraping (channel details, date range for videos, and
 a query).
-2. Web scraping on a select youtube channel and date range (error
+b. Web scraping on a select youtube channel and date range (error
 checking for videos with missing transcripts).
 ○ Traverse through each video in date range
 ○ Retrieve transcript
 ○ Formatting transcripts to useable documents (with included video name
 and timestamps for each word/phrase in document)
-3. Search engine, using queries to search through all channel’s videos
+c. Search engine, using queries to search through all channel’s videos
 (documents), returns a result that includes all found timestamps and the
 respective video names, as well as a couple of words that appeared around the
 found queries.
-4. Display the result in the interface, below the search/config tool.
+d. Display the result in the interface, below the search/config tool.
